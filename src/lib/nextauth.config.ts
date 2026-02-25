@@ -5,7 +5,7 @@ import Credentials from "next-auth/providers/credentials";
 
 interface AuthorizeUser {
   _id?: string;
-  id?: string;
+  id: string;
   role?: string;
   backendToken: string;
 }
@@ -33,8 +33,17 @@ export const nextAuthConfig: NextAuthOptions = {
 
         if (finalResponse.message !== "success") return null;
 
+        const apiUser = finalResponse.user ?? {};
+        const id: string =
+          apiUser._id ??
+          apiUser.id ??
+          apiUser.email ??
+          apiUser.name ??
+          "user";
+
         return {
-          ...finalResponse.user,
+          ...apiUser,
+          id,
           backendToken: finalResponse.token,
         } as AuthorizeUser;
       },
