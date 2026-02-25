@@ -33,7 +33,7 @@ export default function CartContent({
     const typedRes = res as CartMutationResponse | undefined;
     if (typedRes?.status === "success" && typedRes?.data) {
       const cart = typedRes.data.cart ?? typedRes.data;
-      setCartItems(cart.products ?? []);
+      setCartItems((cart.products ?? []) as CartItemType[]);
       setTotal(cart.totalCartPrice ?? total);
       toast.success("تم تحديث الكمية");
     } else {
@@ -48,7 +48,7 @@ export default function CartContent({
     const typedRes = res as CartMutationResponse | undefined;
     if (typedRes?.status === "success" && typedRes?.data) {
       const cart = typedRes.data.cart ?? typedRes.data;
-      setCartItems(cart.products ?? []);
+      setCartItems((cart.products ?? []) as CartItemType[]);
       setTotal(cart.totalCartPrice ?? 0);
       toast.success("تم الحذف من السلة");
     } else {
