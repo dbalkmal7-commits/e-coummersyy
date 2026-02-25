@@ -3,6 +3,7 @@
 import axios from "axios";
 import { API_BASE } from "@/lib/api";
 import { getMyToken } from "./getMyToken";
+import { getAxiosErrorMessage } from "@/types/api";
 
 function getHomeUrl(): string {
   const base =
@@ -30,11 +31,11 @@ export async function createCheckoutSession(cartId: string) {
     );
     const url = data?.session?.url ?? data?.url ?? null;
     return { status: data?.status ?? "success", url };
-  } catch (err: any) {
+  } catch (err: unknown) {
     return {
       status: "fail",
       url: null,
-      message: err?.response?.data?.message ?? "Checkout error",
+      message: getAxiosErrorMessage(err) ?? "Checkout error",
     };
   }
 }

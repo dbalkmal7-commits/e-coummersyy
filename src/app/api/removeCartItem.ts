@@ -3,6 +3,7 @@
 import axios from "axios";
 import { API_BASE } from "@/lib/api";
 import { getMyToken } from "./getMyToken";
+import { getAxiosErrorMessage } from "@/types/api";
 
 export async function removeCartItem(itemId: string) {
   const token = await getMyToken();
@@ -13,7 +14,7 @@ export async function removeCartItem(itemId: string) {
       headers: { token },
     });
     return data;
-  } catch (err: any) {
-    return { status: "fail", message: err?.response?.data?.message ?? "Error" };
+  } catch (err: unknown) {
+    return { status: "fail", message: getAxiosErrorMessage(err) ?? "Error" };
   }
 }

@@ -9,7 +9,7 @@ import { OrdersApiResponse } from "@/types/order.type";
 export async function getUserOrders(): Promise<OrdersApiResponse | null> {
   const token = await getMyToken();
   const session = await getServerSession(nextAuthConfig);
-  const userId = (session as any)?.userId;
+  const userId = session?.userId;
   if (!token || !userId) return null;
 
   try {

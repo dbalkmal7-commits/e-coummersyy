@@ -1,6 +1,5 @@
 import getAllCategories from "@/app/api/getAllCategories";
 import MySlider from "@/components/my slider/my-slider";
-import Link from "next/link";
 import React from "react";
 
 export default async function CategorySlider() {

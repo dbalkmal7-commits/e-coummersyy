@@ -8,6 +8,7 @@ import { removeCartItem } from "../api/removeCartItem";
 import { createCheckoutSession } from "../api/checkout";
 import { toast } from "sonner";
 import { CartItem as CartItemType } from "@/types/cart.type";
+import type { CartMutationResponse } from "@/types/api";
 import { useState } from "react";
 
 export default function CartContent({
@@ -29,13 +30,14 @@ export default function CartContent({
     setLoading(itemId);
     const res = await updateCartItem(itemId, count);
     setLoading(null);
-    if (res?.status === "success" && res?.data) {
-      const cart = (res.data as any).cart ?? res.data;
+    const typedRes = res as CartMutationResponse | undefined;
+    if (typedRes?.status === "success" && typedRes?.data) {
+      const cart = typedRes.data.cart ?? typedRes.data;
       setCartItems(cart.products ?? []);
       setTotal(cart.totalCartPrice ?? total);
       toast.success("تم تحديث الكمية");
     } else {
-      toast.error((res as any)?.message ?? "حدث خطأ");
+      toast.error(typedRes?.message ?? "حدث خطأ");
     }
   }
 
@@ -43,13 +45,14 @@ export default function CartContent({
     setLoading(itemId);
     const res = await removeCartItem(itemId);
     setLoading(null);
-    if (res?.status === "success" && res?.data) {
-      const cart = (res.data as any).cart ?? res.data;
+    const typedRes = res as CartMutationResponse | undefined;
+    if (typedRes?.status === "success" && typedRes?.data) {
+      const cart = typedRes.data.cart ?? typedRes.data;
       setCartItems(cart.products ?? []);
       setTotal(cart.totalCartPrice ?? 0);
       toast.success("تم الحذف من السلة");
     } else {
-      toast.error((res as any)?.message ?? "حدث خطأ");
+      toast.error(typedRes?.message ?? "حدث خطأ");
     }
   }
 
@@ -60,7 +63,7 @@ export default function CartContent({
     if (res?.url) {
       window.location.href = res.url;
     } else {
-      toast.error((res as any)?.message ?? "تعذر إنشاء جلسة الدفع");
+      toast.error(res?.message ?? "تعذر إنشاء جلسة الدفع");
     }
   }
 

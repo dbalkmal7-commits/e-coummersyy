@@ -9,7 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { signIn } from "next-auth/react";
 import { loginSchema } from "@/schemas/auth.schemas";
 
-export default function page() {
+export default function LoginPage() {
     const form = useForm({
     defaultValues: {
       email: "",

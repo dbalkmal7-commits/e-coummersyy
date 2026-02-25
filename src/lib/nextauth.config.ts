@@ -1,5 +1,14 @@
+import type { JWT } from "next-auth/jwt";
+import type { Session } from "next-auth";
 import { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+
+interface AuthorizeUser {
+  _id?: string;
+  id?: string;
+  role?: string;
+  backendToken: string;
+}
 
 export const nextAuthConfig: NextAuthOptions = {
   providers: [
@@ -24,11 +33,10 @@ export const nextAuthConfig: NextAuthOptions = {
 
         if (finalResponse.message !== "success") return null;
 
-        // نحفظ توكن الباك إند داخل الـ user ليمر إلى jwt callback
         return {
           ...finalResponse.user,
           backendToken: finalResponse.token,
-        };
+        } as AuthorizeUser;
       },
     }),
   ],
@@ -36,21 +44,21 @@ export const nextAuthConfig: NextAuthOptions = {
   callbacks: {
     jwt(params) {
       if (params.user) {
-        const user = params.user as any;
-        (params.token as any).backendToken = user.backendToken;
-        (params.token as any).role = user.role ?? "user";
-        (params.token as any).userId = user._id ?? user.id;
+        const user = params.user as AuthorizeUser;
+        const token = params.token as JWT;
+        token.backendToken = user.backendToken;
+        token.role = user.role ?? "user";
+        token.userId = user._id ?? user.id;
       }
       return params.token;
     },
 
     session(params) {
-      const token = params.token as any;
-
-      (params.session as any).role = token.role ?? "user";
-      (params.session as any).backendToken = token.backendToken;
-      (params.session as any).userId = token.userId;
-
+      const token = params.token as JWT;
+      const session = params.session as Session & { role?: string; backendToken?: string; userId?: string };
+      session.role = token.role ?? "user";
+      session.backendToken = token.backendToken;
+      session.userId = token.userId;
       return params.session;
     },
   },

@@ -1,5 +1,5 @@
 
-import React, { use } from 'react'
+import React from "react";
 
 import img1 from "../../../../public/image/als-slider.webp"
 import img2 from "../../../../public/image/als-slider.webp"

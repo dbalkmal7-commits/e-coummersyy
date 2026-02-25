@@ -12,7 +12,8 @@ export default function AddToCardBtn( {productId} : { productId : string } ) {
    if (data?.status === "success") {
       toast.success("تمت إضافة المنتج إلى السلة", { position: "top-center" });
    } else {
-      toast.error((data as any)?.message ?? "حدث خطأ", { position: "top-center" });
+      const err = data as { message?: string };
+      toast.error(err?.message ?? "حدث خطأ", { position: "top-center" });
    }
 
    }

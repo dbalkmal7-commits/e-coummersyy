@@ -1,5 +1,4 @@
 import ProductDetails from "@/app/api/productdetails";
-import { Button } from "@/components/ui/button";
 import { notFound } from "next/navigation";
 import React from "react";
 import Image from "next/image";

@@ -2,6 +2,7 @@
 
 import { decode } from "next-auth/jwt";
 import { cookies } from "next/headers";
+import type { DecodedToken } from "@/types/api";
 
 export async function getMyToken() {
   const myCookies = await cookies();
@@ -24,5 +25,6 @@ export async function getMyToken() {
 
   console.log("decodedToken", decodedToken);
 
-  return (decodedToken as any)?.backendToken ?? null;
+  const token = decodedToken as DecodedToken;
+  return token?.backendToken ?? null;
 }
