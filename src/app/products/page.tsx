@@ -25,12 +25,12 @@ export default async function ProductsPage({
 
   return (
     <div className="container mx-auto md:w-[80%] py-8">
-      <h1 className="text-2xl font-bold mb-6">جميع المنتجات</h1>
-      <div className="flex flex-wrap gap-4">
+      <h1 className="text-4xl font-bold mb-6">جميع المنتجات</h1>
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4">
         {data.map((product: Product) => (
           <Card
             key={product._id}
-            className="w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(33.333%-0.5rem)] lg:w-[calc(25%-0.5rem)] flex flex-col"
+            className="flex flex-col"
           >
             <Link href={`/products/${product._id}`}>
               <CardHeader>

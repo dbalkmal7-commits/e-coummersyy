@@ -33,11 +33,11 @@ export default async function CategoryProductsPage({
       <p className="text-muted-foreground mb-6">
         {products.length} منتج
       </p>
-      <div className="flex flex-wrap gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4">
         {products.map((product: Product) => (
           <Card
             key={product._id}
-            className="w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(33.333%-0.5rem)] lg:w-[calc(25%-0.5rem)] flex flex-col"
+            className="flex flex-col"
           >
             <Link href={`/products/${product._id}`}>
               <CardHeader>
